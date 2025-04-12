@@ -1,0 +1,11 @@
+{
+  "name": "simple-node-echo-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node echo.js"
+  },
+  "keywords": [],
+  "author": ""
+}
