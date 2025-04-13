@@ -1,11 +1,15 @@
 {
-  "name": "simple-node-echo-server",
+  "name": "simple-node-api-server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node echo.js"
+    "start": "node api.js"
   },
   "keywords": [],
-  "author": ""
+  "author": "",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0"
+  }
 }

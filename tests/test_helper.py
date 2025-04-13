@@ -6,13 +6,12 @@ import atexit
 class EchoServerTest:
     def __init__(self, server_type):
         self.server_type = server_type
-        self.base_url = f"http://localhost"
         self.process = None
         
-    def start_server(self, commands):
+    def start_server(self, dir, commands):
         print(f"Starting {self.server_type} server with commands: {commands}...")
 
-        self.process = subprocess.Popen(commands)
+        self.process = subprocess.Popen(commands, cwd=dir)
 
         # Wait for server to start
         time.sleep(2)
@@ -26,14 +25,23 @@ class EchoServerTest:
             self.process.terminate()
             self.process.wait()
             
-    def test_echo(self, port):
-        """Test the echo endpoint"""
-        test_data = "Hello, World!"
+    def test_api(self, url):
+        """Test the echo endpoint and return error message if any"""
+        test_input = '{"name": "John"}'
+        test_output = '{"message":"Hello John!"}'
         try:
-            response = requests.post(f"{self.base_url}:{port}/echo", data=test_data)
-            assert response.status_code == 200
-            assert response.content == test_data.encode() if isinstance(test_data, str) else test_data
-            return True
+            response = requests.post(url, data=test_input)
+            if response.status_code != 200:
+              return f"Error unexpected status code: {response.status_code} {response.text}"
+            
+            # Strip trailing whitespace and newlines from both expected and actual content
+            actual_content = response.content.decode().strip()
+            expected_content = test_output.strip()
+            
+            print(f"output from {self.server_type} server: {actual_content}")
+            
+            if actual_content != expected_content:
+              return f"Error unexpected content: '{actual_content}' != '{expected_content}'"
+            return ""
         except Exception as e:
-            print(f"Error testing {self.server_type} server: {str(e)}")
-            return False 
+            return f"Error testing {self.server_type} server: {str(e)}"

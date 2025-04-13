@@ -1,10 +1,17 @@
-### Echo servers
+### Simple API servers
 
-This repository contains echo server implementation in various programming languages. 
+This repository contains simple hello server implementation (parse JSON and return JSON) in various programming languages.
+
 
 ```
-$ curl -X POST -d '{"foo": "bar"}' http://localhost:8080/echo
-{"foo": "bar"}
+$ curl -X POST -d '{"name": "John"}' http://localhost:8080/api
+{"message": "Hello John!"}
 ```
 
-Test code is still in progress
+### integration test
+
+Test code is written in Python and still in progress
+
+```
+python tests/test_echo_servers.py
+```
