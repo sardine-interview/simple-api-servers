@@ -1,1 +1,3 @@
-npm run start
+Simple express server
+
+> npm run start

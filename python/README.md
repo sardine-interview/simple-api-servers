@@ -1,1 +1,3 @@
-fastapi dev api.py
+Simple fastapi server
+
+> fastapi dev api.py
