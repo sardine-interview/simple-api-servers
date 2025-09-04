@@ -1,6 +1,6 @@
 # Java Simple API Server
 
-A minimal REST API server using the Javalin framework.
+A minimal REST API server using Spring Boot framework.
 
 ## Usage
 
@@ -33,7 +33,7 @@ mvn dependency:resolve
 mvn compile
 
 # Run
-mvn exec:java -Dexec.mainClass="com.example.ApiServer"
+mvn spring-boot:run
 ```
 
 ## API
@@ -49,5 +49,5 @@ curl -X POST -d '{"name": "John"}' -H "Content-Type: application/json" http://lo
 
 ## Dependencies
 
-- Javalin 6.1.3 (lightweight web framework)
-- Jackson (JSON processing)
+- Spring Boot 3.2.3 (web framework)
+- Spring Boot Starter Web (includes embedded Tomcat and Jackson)
