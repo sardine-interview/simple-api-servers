@@ -7,7 +7,7 @@ compile: install
 	mvn compile
 
 run: compile
-	mvn exec:java -Dexec.mainClass="com.example.ApiServer"
+	mvn spring-boot:run
 
 clean:
 	mvn clean
