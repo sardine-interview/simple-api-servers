@@ -1,2 +1,12 @@
 __pycache__
+
+# Node
 node_modules
+
+# Java
+*.class
+target/
+.m2/
+*.jar
+*.war
+*.ear
