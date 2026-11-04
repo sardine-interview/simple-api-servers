@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 )
 
 type HelloRequest struct {
@@ -13,6 +14,28 @@ type HelloRequest struct {
 
 type HelloResponse struct {
 	Message string `json:"message"`
+}
+
+type FibonacciResponse struct {
+	N      int   `json:"n"`
+	Result int64 `json:"result"`
+}
+
+type ErrorResponse struct {
+	Error string `json:"error"`
+}
+
+func fibonacci(n int) int64 {
+	if n < 2 {
+		return int64(n)
+	}
+	return fibonacci(n-1) + fibonacci(n-2)
+}
+
+func writeJSON(w http.ResponseWriter, status int, payload any) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+	json.NewEncoder(w).Encode(payload)
 }
 
 func main() {
@@ -31,6 +54,16 @@ func main() {
 		response := HelloResponse{Message: fmt.Sprintf("Hello %s!", request.Name)}
 		json.NewEncoder(w).Encode(response)
 	})
+
+	http.HandleFunc("GET /fibonacci", func(w http.ResponseWriter, r *http.Request) {
+		n, err := strconv.Atoi(r.URL.Query().Get("n"))
+		if err != nil || n < 0 || n > 50 {
+			writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: "n must be an integer between 0 and 50"})
+			return
+		}
+		writeJSON(w, http.StatusOK, FibonacciResponse{N: n, Result: fibonacci(n)})
+	})
+
 	fmt.Println("Server is running on port 8080")
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {

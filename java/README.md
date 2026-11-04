@@ -39,6 +39,7 @@ mvn spring-boot:run
 ## API
 
 - **POST** `/api` - Accepts JSON with `name` field, returns greeting message
+- **GET** `/fibonacci?n=<0-50>` - Returns the nth Fibonacci number (0-indexed) using naive recursion
 
 ### Example
 
