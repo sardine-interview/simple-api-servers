@@ -43,17 +43,17 @@ func main() {
 	http.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			writeJSON(w, http.StatusInternalServerError, ErrorResponse{Error: err.Error()})
 			return
 		}
 		var request HelloRequest
 		err = json.Unmarshal(body, &request)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
+			writeJSON(w, http.StatusBadRequest, ErrorResponse{Error: err.Error()})
 			return
 		}
 		response := HelloResponse{Message: fmt.Sprintf("Hello %s!", request.Name)}
-		json.NewEncoder(w).Encode(response)
+		writeJSON(w, http.StatusOK, response)
 	})
 
 	http.HandleFunc("GET /fibonacci", func(w http.ResponseWriter, r *http.Request) {
