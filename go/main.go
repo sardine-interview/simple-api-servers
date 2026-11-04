@@ -25,6 +25,7 @@ type ErrorResponse struct {
 	Error string `json:"error"`
 }
 
+// This is slow on purpose, don't change it
 func fibonacci(n int) int64 {
 	if n < 2 {
 		return int64(n)
